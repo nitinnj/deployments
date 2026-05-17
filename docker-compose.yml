@@ -1,0 +1,43 @@
+services:
+
+  web:
+    build: ../web
+    container_name: web
+    restart: always
+    ports:
+      - "3000:3000"
+    networks:
+      - production-network
+
+  admin:
+    build: ../admin
+    container_name: admin
+    restart: always
+    ports:
+      - "8080:80"
+    networks:
+      - production-network
+
+  backend:
+    build: ../backend
+    container_name: backend
+    restart: always
+    ports:
+      - "5000:5000"
+    networks:
+      - production-network
+
+  strapi:
+    build: ../strapi
+    container_name: strapi
+    restart: always
+    ports:
+      - "1337:1337"
+    env_file:
+      - ../strapi/.env
+    networks:
+      - production-network
+
+networks:
+  production-network:
+    external: true
