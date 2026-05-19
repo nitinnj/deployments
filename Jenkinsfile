@@ -6,11 +6,11 @@ pipeline {
         stage('Pull Latest Code') {
             steps {
                 sh '''
-                cd ~/projects/admin && git pull
-                cd ~/projects/backend && git pull
-                cd ~/projects/web && git pull
-                cd ~/projects/strapi && git pull
-                cd ~/projects/deployments && git pull
+                cd /home/ubuntu/projects/admin && git pull
+                cd /home/ubuntu/projects/backend && git pull
+                cd /home/ubuntu/projects/web && git pull
+                cd /home/ubuntu/projects/strapi && git pull
+                cd /home/ubuntu/projects/deployments && git pull
                 '''
             }
         }
@@ -18,7 +18,7 @@ pipeline {
         stage('Deploy Application') {
             steps {
                 sh '''
-                cd ~/projects/deployments
+                cd /home/ubuntu/projects/deployments
                 docker compose up -d --build
                 '''
             }
