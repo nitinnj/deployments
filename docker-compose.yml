@@ -2,42 +2,42 @@ services:
 
   web:
     build: ../web
-    container_name: web
+    container_name: dev-web
     restart: always
     ports:
-      - "3000:3000"
+      - "3002:3000"
     networks:
-      - production-network
+      - dev-network
 
   admin:
     build: ../admin
-    container_name: admin
+    container_name: dev-admin
     restart: always
     ports:
-      - "8080:80"
+      - "8083:80"
     networks:
-      - production-network
+      - dev-network
 
   backend:
     build: ../backend
-    container_name: backend
+    container_name: dev-backend
     restart: always
     ports:
-      - "5000:5000"
+      - "5002:5000"
     networks:
-      - production-network
+      - dev-network
 
   strapi:
     build: ../strapi
-    container_name: strapi
+    container_name: dev-strapi
     restart: always
     ports:
-      - "1337:1337"
+      - "1339:1337"
     env_file:
       - ../strapi/.env
     networks:
-      - production-network
+      - dev-network
 
 networks:
-  production-network:
-    external: true
+  dev-network:
+    driver: bridge

@@ -1,8 +1,9 @@
+```groovy
 pipeline {
     agent any
 
     environment {
-        PROJECT_DIR = "/home/ubuntu/projects"
+        PROJECT_DIR = "/home/ubuntu/dev-projects"
     }
 
     stages {
@@ -17,19 +18,19 @@ pipeline {
             }
         }
 
-        stage('Pull Latest Code') {
+        stage('Pull Development Code') {
             steps {
                 sh '''
-                    cd $PROJECT_DIR/admin && git pull origin main
-                    cd $PROJECT_DIR/backend && git pull origin main
-                    cd $PROJECT_DIR/web && git pull origin main
-                    cd $PROJECT_DIR/strapi && git pull origin main
-                    cd $PROJECT_DIR/deployments && git pull origin main
+                    cd $PROJECT_DIR/admin && git pull origin development
+                    cd $PROJECT_DIR/backend && git pull origin development
+                    cd $PROJECT_DIR/web && git pull origin development
+                    cd $PROJECT_DIR/strapi && git pull origin development
+                    cd $PROJECT_DIR/deployments && git pull origin development
                 '''
             }
         }
 
-        stage('Deploy Application') {
+        stage('Deploy Development Environment') {
             steps {
                 sh '''
                     cd $PROJECT_DIR/deployments
@@ -38,7 +39,7 @@ pipeline {
             }
         }
 
-        stage('Verify Containers') {
+        stage('Verify Development Containers') {
             steps {
                 sh 'docker ps'
             }
@@ -47,11 +48,12 @@ pipeline {
 
     post {
         success {
-            echo 'Deployment successful 🚀'
+            echo 'Development deployment successful 🚀'
         }
 
         failure {
-            echo 'Deployment failed ❌'
+            echo 'Development deployment failed ❌'
         }
     }
 }
+```
