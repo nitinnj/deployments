@@ -1,0 +1,123 @@
+ubuntu@ip-172-31-17-208:~/dev-projects/deployments$ cd J
+-bash: cd: J: No such file or directory
+ubuntu@ip-172-31-17-208:~/dev-projects/deployments$ nano Jenkinsfile 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  GNU nano 8.7.1                                                                                  Jenkinsfile                                                                                           
+```groovy
+pipeline {
+    agent any
+
+    environment {
+        PROJECT_DIR = "/home/ubuntu/dev-projects"
+    }
+
+    stages {
+
+        stage('Verify Environment') {
+            steps {
+                sh '''
+                    whoami
+                    docker --version
+                    docker compose version
+                '''
+            }
+        }
+
+        stage('Pull Development Code') {
+            steps {
+                sh '''
+                    cd $PROJECT_DIR/admin && git pull origin development
+                    cd $PROJECT_DIR/backend && git pull origin development
+                    cd $PROJECT_DIR/web && git pull origin development
+                    cd $PROJECT_DIR/strapi && git pull origin development
+                    cd $PROJECT_DIR/deployments && git pull origin development
+                '''
+            }
+        }
+
+        stage('Deploy Development Environment') {
+            steps {
+                sh '''
+                    cd $PROJECT_DIR/deployments
+                    docker compose up -d --build
+                '''
+            }
+        }
+
+        stage('Verify Development Containers') {
+            steps {
+                sh 'docker ps'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Development deployment successful 🚀'
+        }
+
+        failure {
+            echo 'Development deployment failed ❌'
+        }
+    }
+}
+
