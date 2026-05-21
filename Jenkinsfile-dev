@@ -20,11 +20,11 @@ pipeline {
         stage('Pull Development Code') {
             steps {
                 sh '''
-                    cd $PROJECT_DIR/admin && git pull origin development
-                    cd $PROJECT_DIR/backend && git pull origin development
-                    cd $PROJECT_DIR/web && git pull origin development
-                    cd $PROJECT_DIR/strapi && git pull origin development
-                    cd $PROJECT_DIR/deployments && git pull origin development
+                    cd $PROJECT_DIR/admin && git pull --rebase origin development
+                    cd $PROJECT_DIR/backend && git pull --rebase origin development
+                    cd $PROJECT_DIR/web && git pull --rebase origin development
+                    cd $PROJECT_DIR/strapi && git pull --rebase origin development
+                    cd $PROJECT_DIR/deployments && git pull --rebase origin development
                 '''
             }
         }
@@ -41,7 +41,9 @@ pipeline {
 
         stage('Verify Running Containers') {
             steps {
-                sh 'docker ps'
+                sh '''
+                    docker ps
+                '''
             }
         }
     }
