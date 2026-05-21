@@ -1,9 +1,8 @@
-```groovy
 pipeline {
     agent any
 
     environment {
-        PROJECT_DIR = "cd /home/ubuntu/dev-projects/admin"
+        PROJECT_DIR = "/home/ubuntu/dev-projects"
     }
 
     stages {
@@ -34,6 +33,7 @@ pipeline {
             steps {
                 sh '''
                     cd $PROJECT_DIR/deployments
+                    docker compose down
                     docker compose up -d --build
                 '''
             }
@@ -56,4 +56,3 @@ pipeline {
         }
     }
 }
-```
