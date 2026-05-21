@@ -3,7 +3,7 @@ pipeline {
     agent any
 
     environment {
-        PROJECT_DIR = "/home/ubuntu/dev-projects"
+        PROJECT_DIR = "cd /home/ubuntu/dev-projects/admin"
     }
 
     stages {
